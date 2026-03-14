@@ -19,7 +19,7 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
 
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Products', path: '/products', icon: Package },
     { name: 'Receipts', path: '/receipts', icon: ArrowDownToLine },
     { name: 'Deliveries', path: '/deliveries', icon: ArrowUpFromLine },

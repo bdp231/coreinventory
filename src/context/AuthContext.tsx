@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = (userData: User) => {
     setUser(userData);
     localStorage.setItem('userInfo', JSON.stringify(userData));
-    navigate('/');
+    navigate('/dashboard');
   };
 
   const logout = () => {

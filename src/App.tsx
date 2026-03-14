@@ -15,6 +15,7 @@ import Operations from './pages/Operations';
 import MoveHistory from './pages/MoveHistory';
 import WarehouseSettings from './pages/WarehouseSettings';
 import Profile from './pages/Profile';
+import Landing from './pages/Landing';
 
 export default function App() {
   return (
@@ -22,11 +23,12 @@ export default function App() {
       <AuthProvider>
         <Toaster position="top-right" />
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          
+
           <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
             <Route path="/receipts" element={<Operations type="Receipt" title="Receipts" />} />
             <Route path="/deliveries" element={<Operations type="Delivery" title="Deliveries" />} />
