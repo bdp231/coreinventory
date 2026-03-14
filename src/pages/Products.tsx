@@ -172,76 +172,78 @@ export default function Products() {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50 border-b border-slate-200 text-sm text-slate-500">
-              <th className="px-6 py-4 font-medium">Name</th>
-              <th className="px-6 py-4 font-medium">SKU</th>
-              <th className="px-6 py-4 font-medium">Category</th>
-              <th className="px-6 py-4 font-medium">Total Stock</th>
-              <th className="px-6 py-4 font-medium">Stock by Warehouse</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map((product) => (
-              <tr key={product._id} className="border-b border-slate-100 hover:bg-slate-50">
-                <td className="px-6 py-4 text-sm font-medium text-slate-900">{product.name}</td>
-                <td className="px-6 py-4 text-sm text-slate-500">{product.sku}</td>
-                <td className="px-6 py-4 text-sm text-slate-500">{product.category}</td>
-                <td className="px-6 py-4 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    product.totalStock <= product.reorderLevel ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
-                  }`}>
-                    {product.totalStock} {product.unit}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-slate-500">
-                  {product.stockByWarehouse && product.stockByWarehouse.length > 0 ? (
-                    <div className="flex flex-col gap-1">
-                      {product.stockByWarehouse.map((w: any) => (
-                        w.stock > 0 && <span key={w._id} className="text-xs">{w.warehouse?.name}: {w.stock}</span>
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="text-xs text-slate-400">No stock</span>
-                  )}
-                </td>
-                <td className="px-6 py-4 text-sm text-right space-x-2">
-                  <button
-                    onClick={() => {
-                      setFormData({
-                        name: product.name, sku: product.sku, category: product.category,
-                        unit: product.unit, warehouse: '',
-                        stock: 0, reorderLevel: product.reorderLevel
-                      });
-                      setEditingId(product._id);
-                      setIsModalOpen(true);
-                    }}
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    <Edit className="w-4 h-4 inline" />
-                  </button>
-                  {user?.role === 'Inventory Manager' && (
+        <div className="overflow-x-auto">
+          <table className="min-w-[780px] w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50 border-b border-slate-200 text-sm text-slate-500">
+                <th className="px-6 py-4 font-medium">Name</th>
+                <th className="px-6 py-4 font-medium">SKU</th>
+                <th className="px-6 py-4 font-medium">Category</th>
+                <th className="px-6 py-4 font-medium">Total Stock</th>
+                <th className="px-6 py-4 font-medium">Stock by Warehouse</th>
+                <th className="px-6 py-4 font-medium text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProducts.map((product) => (
+                <tr key={product._id} className="border-b border-slate-100 hover:bg-slate-50">
+                  <td className="px-6 py-4 text-sm font-medium text-slate-900">{product.name}</td>
+                  <td className="px-6 py-4 text-sm text-slate-500">{product.sku}</td>
+                  <td className="px-6 py-4 text-sm text-slate-500">{product.category}</td>
+                  <td className="px-6 py-4 text-sm">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      product.totalStock <= product.reorderLevel ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+                    }`}>
+                      {product.totalStock} {product.unit}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-slate-500">
+                    {product.stockByWarehouse && product.stockByWarehouse.length > 0 ? (
+                      <div className="flex flex-col gap-1">
+                        {product.stockByWarehouse.map((w: any) => (
+                          w.stock > 0 && <span key={w._id} className="text-xs">{w.warehouse?.name}: {w.stock}</span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-slate-400">No stock</span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-right space-x-2">
                     <button
-                      onClick={() => handleDelete(product._id)}
-                      className="text-red-600 hover:text-red-800"
+                      onClick={() => {
+                        setFormData({
+                          name: product.name, sku: product.sku, category: product.category,
+                          unit: product.unit, warehouse: '',
+                          stock: 0, reorderLevel: product.reorderLevel
+                        });
+                        setEditingId(product._id);
+                        setIsModalOpen(true);
+                      }}
+                      className="text-blue-600 hover:text-blue-800"
                     >
-                      <Trash2 className="w-4 h-4 inline" />
+                      <Edit className="w-4 h-4 inline" />
                     </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {filteredProducts.length === 0 && (
-              <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
-                  No products found matching your filters.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                    {user?.role === 'Inventory Manager' && (
+                      <button
+                        onClick={() => handleDelete(product._id)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        <Trash2 className="w-4 h-4 inline" />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {filteredProducts.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                    No products found matching your filters.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (

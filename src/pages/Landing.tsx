@@ -126,7 +126,6 @@ export default function Landing() {
       <footer className="border-t border-white/10 py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-200/70">
           <span>© {new Date().getFullYear()} CoreInventory</span>
-          <span>Built with React, Tailwind & TypeScript</span>
         </div>
       </footer>
     </div>

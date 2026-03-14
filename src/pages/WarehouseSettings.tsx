@@ -87,41 +87,43 @@ export default function WarehouseSettings() {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50 border-b border-slate-200 text-sm text-slate-500">
-              <th className="px-6 py-4 font-medium">Name</th>
-              <th className="px-6 py-4 font-medium">Location</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {warehouses.map((warehouse) => (
-              <tr key={warehouse._id} className="border-b border-slate-100 hover:bg-slate-50">
-                <td className="px-6 py-4 text-sm font-medium text-slate-900">{warehouse.name}</td>
-                <td className="px-6 py-4 text-sm text-slate-500">{warehouse.location}</td>
-                <td className="px-6 py-4 text-sm text-right space-x-2">
-                  <button
-                    onClick={() => {
-                      setFormData({ name: warehouse.name, location: warehouse.location });
-                      setEditingId(warehouse._id);
-                      setIsModalOpen(true);
-                    }}
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    <Edit className="w-4 h-4 inline" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(warehouse._id)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    <Trash2 className="w-4 h-4 inline" />
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-[680px] w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50 border-b border-slate-200 text-sm text-slate-500">
+                <th className="px-6 py-4 font-medium">Name</th>
+                <th className="px-6 py-4 font-medium">Location</th>
+                <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {warehouses.map((warehouse) => (
+                <tr key={warehouse._id} className="border-b border-slate-100 hover:bg-slate-50">
+                  <td className="px-6 py-4 text-sm font-medium text-slate-900">{warehouse.name}</td>
+                  <td className="px-6 py-4 text-sm text-slate-500">{warehouse.location}</td>
+                  <td className="px-6 py-4 text-sm text-right space-x-2">
+                    <button
+                      onClick={() => {
+                        setFormData({ name: warehouse.name, location: warehouse.location });
+                        setEditingId(warehouse._id);
+                        setIsModalOpen(true);
+                      }}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <Edit className="w-4 h-4 inline" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(warehouse._id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <Trash2 className="w-4 h-4 inline" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (

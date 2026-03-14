@@ -160,75 +160,77 @@ export default function Operations({ type, title }: OperationsProps) {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50 border-b border-slate-200 text-sm text-slate-500">
-              <th className="px-6 py-4 font-medium">Date</th>
-              <th className="px-6 py-4 font-medium">Product</th>
-              {type !== 'Transfer' && <th className="px-6 py-4 font-medium">Warehouse</th>}
-              {type === 'Receipt' && <th className="px-6 py-4 font-medium">Supplier</th>}
-              {type === 'Delivery' && <th className="px-6 py-4 font-medium">Customer</th>}
-              {type === 'Transfer' && (
-                <>
-                  <th className="px-6 py-4 font-medium">From</th>
-                  <th className="px-6 py-4 font-medium">To</th>
-                </>
-              )}
-              {type === 'Adjustment' && (
-                <>
-                  <th className="px-6 py-4 font-medium">System Qty</th>
-                  <th className="px-6 py-4 font-medium">Counted Qty</th>
-                </>
-              )}
-              {type !== 'Adjustment' && <th className="px-6 py-4 font-medium">Quantity</th>}
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {operations.map((op) => (
-              <tr key={op._id} className="border-b border-slate-100 hover:bg-slate-50">
-                <td className="px-6 py-4 text-sm text-slate-600">{
-                  isValid(new Date(op.date)) ? format(new Date(op.date), 'MMM d, yyyy') : '-'
-                }</td>
-                <td className="px-6 py-4 text-sm font-medium text-slate-900">{op.product?.name || 'Unknown product'}</td>
-                {type !== 'Transfer' && <td className="px-6 py-4 text-sm text-slate-500">{op.warehouse?.name}</td>}
-                {type === 'Receipt' && <td className="px-6 py-4 text-sm text-slate-500">{op.supplierName}</td>}
-                {type === 'Delivery' && <td className="px-6 py-4 text-sm text-slate-500">{op.customerName}</td>}
+        <div className="overflow-x-auto">
+          <table className="min-w-[880px] w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50 border-b border-slate-200 text-sm text-slate-500">
+                <th className="px-6 py-4 font-medium">Date</th>
+                <th className="px-6 py-4 font-medium">Product</th>
+                {type !== 'Transfer' && <th className="px-6 py-4 font-medium">Warehouse</th>}
+                {type === 'Receipt' && <th className="px-6 py-4 font-medium">Supplier</th>}
+                {type === 'Delivery' && <th className="px-6 py-4 font-medium">Customer</th>}
                 {type === 'Transfer' && (
                   <>
-                    <td className="px-6 py-4 text-sm text-slate-500">{op.fromWarehouse?.name}</td>
-                    <td className="px-6 py-4 text-sm text-slate-500">{op.toWarehouse?.name}</td>
+                    <th className="px-6 py-4 font-medium">From</th>
+                    <th className="px-6 py-4 font-medium">To</th>
                   </>
                 )}
                 {type === 'Adjustment' && (
                   <>
-                    <td className="px-6 py-4 text-sm text-slate-500">{op.systemQuantity}</td>
-                    <td className="px-6 py-4 text-sm text-slate-500">{op.countedQuantity}</td>
+                    <th className="px-6 py-4 font-medium">System Qty</th>
+                    <th className="px-6 py-4 font-medium">Counted Qty</th>
                   </>
                 )}
-                {type !== 'Adjustment' && <td className="px-6 py-4 text-sm text-slate-500">{op.quantity}</td>}
-                <td className="px-6 py-4 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    op.status === 'Done' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
-                  }`}>
-                    {op.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-right">
-                  {op.status === 'Draft' && (
-                    <button
-                      onClick={() => handleValidate(op._id)}
-                      className="text-emerald-600 hover:text-emerald-800 flex items-center justify-end gap-1 w-full"
-                    >
-                      <CheckCircle className="w-4 h-4" /> Validate
-                    </button>
-                  )}
-                </td>
+                {type !== 'Adjustment' && <th className="px-6 py-4 font-medium">Quantity</th>}
+                <th className="px-6 py-4 font-medium">Status</th>
+                <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {operations.map((op) => (
+                <tr key={op._id} className="border-b border-slate-100 hover:bg-slate-50">
+                  <td className="px-6 py-4 text-sm text-slate-600">{
+                    isValid(new Date(op.date)) ? format(new Date(op.date), 'MMM d, yyyy') : '-'
+                  }</td>
+                  <td className="px-6 py-4 text-sm font-medium text-slate-900">{op.product?.name || 'Unknown product'}</td>
+                  {type !== 'Transfer' && <td className="px-6 py-4 text-sm text-slate-500">{op.warehouse?.name}</td>}
+                  {type === 'Receipt' && <td className="px-6 py-4 text-sm text-slate-500">{op.supplierName}</td>}
+                  {type === 'Delivery' && <td className="px-6 py-4 text-sm text-slate-500">{op.customerName}</td>}
+                  {type === 'Transfer' && (
+                    <>
+                      <td className="px-6 py-4 text-sm text-slate-500">{op.fromWarehouse?.name}</td>
+                      <td className="px-6 py-4 text-sm text-slate-500">{op.toWarehouse?.name}</td>
+                    </>
+                  )}
+                  {type === 'Adjustment' && (
+                    <>
+                      <td className="px-6 py-4 text-sm text-slate-500">{op.systemQuantity}</td>
+                      <td className="px-6 py-4 text-sm text-slate-500">{op.countedQuantity}</td>
+                    </>
+                  )}
+                  {type !== 'Adjustment' && <td className="px-6 py-4 text-sm text-slate-500">{op.quantity}</td>}
+                  <td className="px-6 py-4 text-sm">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      op.status === 'Done' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                    }`}>
+                      {op.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-right">
+                    {op.status === 'Draft' && (
+                      <button
+                        onClick={() => handleValidate(op._id)}
+                        className="text-emerald-600 hover:text-emerald-800 flex items-center justify-end gap-1 w-full"
+                      >
+                        <CheckCircle className="w-4 h-4" /> Validate
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (
