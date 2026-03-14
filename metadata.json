@@ -1,0 +1,5 @@
+{
+  "name": "CoreInventory",
+  "description": "A complete Inventory Management System (IMS) for warehouse stock operations.",
+  "requestFramePermissions": []
+}
